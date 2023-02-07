@@ -7,3 +7,5 @@ I'm a biology graduate student at CSUN and I made this repository to hold my fil
 I'm learning to make video games in my spare time for fun. Here's a sprite sheet for a character I made!
 
 [Week 2](https://github.com/Biol551-CSUN/Hein/tree/main/Week_02)
+
+[Week 3](https://github.com/Biol551-CSUN/Hein/tree/main/Week_03)
