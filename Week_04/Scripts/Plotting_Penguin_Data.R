@@ -105,20 +105,19 @@ penguins %>%
   summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
             max_bill_length = max(bill_length_mm, na.rm=TRUE))
 
+# Drop all the rows that are missing data on sex
 penguins %>%
   drop_na(sex)
 
+# Drop all the rows that are missing data on sex calculate mean bill length by sex
 penguins %>%
   drop_na(sex) %>%
   group_by(island, sex) %>%
   summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
 
+# Drop NAs from sex, then plot boxplots of flipper length by sex
 penguins %>%
   drop_na(sex) %>%
   ggplot(aes(x = sex, y = flipper_length_mm)) +
   geom_boxplot()
-
-devtools::install_github("jhollist/dadjoke")
-
-dadjoke()
 
