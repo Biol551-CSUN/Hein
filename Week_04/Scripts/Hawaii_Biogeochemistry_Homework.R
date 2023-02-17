@@ -77,7 +77,7 @@ ChemData_long %>%
 
 View(ChemData_long)
 
-ggsave(here("Week_04","output","Biogeochemistry_homework.png"))
+ggsave(here("Week_04","output","Biogeochemistry_homework.png"), width = 10, height = 10)
 
 # Make sure you comment your code and your data, outputs, and script are in the
 # appropriate folders
