@@ -79,16 +79,6 @@ T2 <- tibble(Site.ID = c("A", "B", "D", "E"),
             pH = c(7.3, 7.8, 8.1, 7.9))
 T2
 
-# my tibbles
-
-MyT1 <- tibble(Site.ID = c("W", "X", "Y", "Z"),
-              NaClM = c(2.0, 1.5, 1.0, 0.5))
-MyT1
-
-MyT2 <- tibble(Site.ID = c("V", "W", "Y", "Z"),
-               KClM = c(3.0, 2.5, 2.0, 1.5))
-MyT2
-
 # left join vs right join
 
 left_join(T1, T2)
@@ -106,5 +96,29 @@ full_join(T1, T2)
 semi_join(T1, T2)
 
 anti_join(T1, T2)
+
+# my tibbles
+
+MyT1 <- tibble(growth_medium = c("W", "X", "Y", "Z"),
+               NaClM = c(2.0, 1.5, 1.0, 0.5))
+MyT1
+
+MyT2 <- tibble(growth_medium = c("V", "W", "Y", "Z"),
+               KClM = c(3.0, 2.5, 2.0, 1.5))
+MyT2
+
+left_join(MyT1, MyT2)
+
+right_join(MyT1, MyT2)
+
+inner_join(MyT1, MyT2)
+
+full_join(MyT1, MyT2)
+
+semi_join(MyT1, MyT2)
+
+anti_join(MyT1, MyT2)
+
+# Today's totally awesome R package: {cowsay} ----
 
 say("hello", by = "endlesshorse")
