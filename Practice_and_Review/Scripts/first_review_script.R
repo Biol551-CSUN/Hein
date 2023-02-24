@@ -488,6 +488,19 @@ my_numbers
 # my_data<-read_csv(here("Week_00", "data","sb_temp.csv"))
 # uses here::here()
 # (the left of the :: is the package name and to the right is the function name. In this case, they are both here)
+# format is package::function()
 
 # View(Data) opens a new window to look at the entire dataframe
+
+mpg
+# 234 rows, 11 columns
+
+ggplot(data = mpg) + # makes an empty graph, chooses dataset to use
+  geom_point(mapping = aes(x = displ, y = hwy)) # adds points to graph, maps variables to x and y values
+
+# mapping is always paired with aes()
+
+# ggplot graphing template:
+#ggplot(data = <DATA>) + 
+#  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
 
