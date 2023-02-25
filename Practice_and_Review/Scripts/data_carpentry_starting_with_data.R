@@ -220,7 +220,7 @@ plot(sex)
 #    Can you spot and fix them? Don’t hesitate to experiment!
 
 animal_data <- data.frame(
-  animal = c(dog, cat, sea cucumber, sea urchin),
+  animal = c(dog, cat, sea_cucumber, sea_urchin),
   feel = c("furry", "furry", "squishy", "spiny"),
   weight = c(45, 8, 1.1, 0.8)
 )
