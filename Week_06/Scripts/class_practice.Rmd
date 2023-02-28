@@ -1,0 +1,69 @@
+---
+title: "ClassPractice"
+author: "Mac"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+# HEADER 1
+## HEADER 2
+### HEADER 3
+#### HEADER 4
+##### HEADER 5
+###### HEADER 6
+
+
+I **love** RMarkdown.
+
+
+I *love* RMarkdown.
+
+- item 1
+- item 2
+- item 3
+
+1. item 1
+1. item 2
+1. item 3
+
+![CSUN logo](https://www.csun.edu/sites/default/files/styles/slideshow_full/public/field_image/field_slideshow_slides/banner_identity02.png?itok=yItY0d62)
+
+[Click here](https://silbigerlab.com)
+
+```{r}
+library(tidyverse)
+library(plotrix)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, # always show the code
+                      warning = FALSE # Never show a warning
+                      )
+```
+
