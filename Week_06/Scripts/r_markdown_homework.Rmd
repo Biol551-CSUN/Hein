@@ -1,0 +1,100 @@
+---
+title: "RMarkdownHomework"
+author: "Mac"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.path = "../Output/")
+```
+
+# Instructions
+
+- Take any of the data sheets you have already worked with in class and create **at least one table and one figure in an Rmarkdown file**.
+- Create the most beautiful RMarkdown output you can during lab hours in either an html, github doc, or pdf format.
+- Make sure you have headings with clear explanations of what you are doing.
+- Practice using markdown formatting with **bold**, *italics*, and lists (use each of these at least once).
+- Make sure your outputs and scripts are saved in the appropriate folders. Keep proper coding etiquette (figures need to be pub quality as usual and you need to comment your code).
+
+# Load libraries
+
+```{r}
+library(here)
+library(tidyverse)
+library(lubridate)
+library(kableExtra)
+```
+
+# Load data
+
+```{r}
+CondData <- read_csv(here("Week_06","Data", "CondData.csv"))
+DepthData <- read_csv(here("Week_06", "Data", "DepthData.csv"))
+```
+
+# Data Analysis
+
+```{r cond_data_table, include=FALSE}
+# CondData %>%
+#   kbl() %>% # make it a kable table
+#   kable_classic() %>%
+#   kable_styling(full_width = FALSE)
+```
+
+```{r depth_data_table, include=FALSE}
+# DepthData %>%
+#   kbl() %>% # make it a kable table
+#   kable_classic() %>%
+#   kable_styling(full_width = FALSE)
+```
+
+Tidying the data
+
+```{r}
+CondData_mutated <- CondData %>%
+  mutate(date = mdy_hms(date), # Reformatting dates
+         date = round_date(date, "10 seconds"), # Rounding dates to the nearest 10 seconds
+         ) %>%
+  select("date", "Temperature", "Salinity") # Selecting columns with usable data
+
+DepthData_mutated <- DepthData %>%
+  mutate(date = ymd_hms(date)) # Reformatting dates
+
+FullData <- inner_join(CondData_mutated, DepthData_mutated) # Joining data with inner join to remove NAs
+```
+
+Tabulating the data (top six entries as an example of data)
+
+```{r}
+head(FullData) %>%
+  kbl() %>% # Make it a kable table
+  kable_classic() %>%
+  kable_styling(full_width = FALSE) # Disabling full width option
+```
+
+```{r}
+# compare depth to other three variables
+# need to pivot the data long to facet the data and make multiple two-dimensional scatter plots
+# pivot longer for all variables except depth
+# in facet: free_y
+FullData %>%
+  pivot_longer(cols = Temperature:AbsPressure, # Pivoted cols: Temperature to AbsPressure
+               names_to = "Variables", # name of new col with all the column names
+               values_to = "Values") %>% # name of new col with all the values
+  write_csv(here("Week_06","Data","R_markdown_homework_fulldata.csv"))%>%
+  ggplot(aes(fill = Variables, x = Depth, y = Values)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~Variables, scales = "free") +
+  scale_fill_viridis_d(option = "mako") +
+  theme_light() +
+  labs(title = "Comparison of depth to temperature, salinity, and pressure",
+       x = "Depth", y = "Value")
+
+ggsave(here("Week_06","Output","R_markdown_homework.png"), width = 10, height = 10)
+```
+

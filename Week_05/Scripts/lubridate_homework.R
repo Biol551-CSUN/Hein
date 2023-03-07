@@ -10,13 +10,13 @@ library(lubridate)
 
 # Load Data ----
 
-#CondData <- read_csv(here("Week_05","Data", "CondData.csv"))
+CondData <- read_csv(here("Week_05","Data", "CondData.csv"))
 
-#View(CondData)
+View(CondData)
 
-#DepthData <- read_csv(here("Week_05", "Data", "DepthData.csv"))
+DepthData <- read_csv(here("Week_05", "Data", "DepthData.csv"))
 
-#View(DepthData)
+View(DepthData)
 
 # Data Analysis ----
 
