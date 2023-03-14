@@ -28,25 +28,30 @@ meteorites <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience
 
 # Data Analysis
 
-```{r worldwide_meteorites}
+```{r worldwide_meteorites, fig.align = "center"}
 
-# World meteorite imacts
+# World meteorite impacts
 
-world<-map_data("world")
+world <- map_data("world")
 
-ggplot()+
+head(world)
+
+head(meteorites)
+
+ggplot() +
   geom_polygon(data = world, 
-               aes(x = long, 
-                   y = lat, 
-                   group = group),
+               aes(x = long, y = lat, group = group),
                color = "black",
-               fill = "palegreen4")+ # made landmasses pale green
+               fill = "palegreen4") + # made landmasses pale green
   geom_point(data = meteorites,
-             aes(x = long,
-                 y = lat),
+             aes(x = long, y = lat, size = mass),
              alpha = 0.25,
              color = "maroon1") + # Maroon spots are meteorite impact sites
   theme(panel.background = element_rect(fill = "lightblue")) +
   coord_map(projection = "mercator",
-            xlim = c(-180,180)) # can set limits of longitude (xlim) and latitude (ylim?) to zoom in
+            xlim = c(-180, 180)) + # can set limits of longitude (xlim) and latitude (ylim) to zoom in
+  labs(title = "Impact location and mass of meteorites around the world",
+       x = "Longitude",
+       y = "Latitude",
+       size = "Mass (g)")
 ```
