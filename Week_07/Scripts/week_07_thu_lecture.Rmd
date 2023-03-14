@@ -1,0 +1,103 @@
+---
+title: "week_07_thu_lecture"
+author: "Mac"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load Libraries
+
+```{r}
+library(tidyverse)
+library(here)
+library(maps)
+library(mapdata)
+library(mapproj)
+library(ggmap)
+library(ggsn)
+library(emojifont)
+```
+
+# Load Data
+
+```{r}
+ChemData<-read_csv(here("Week_07","data","chemicaldata_maunalua.csv"))
+glimpse(ChemData)
+```
+
+# Data Analysis
+
+```{r}
+Oahu<-get_map("Oahu")
+ggmap(Oahu)
+```
+
+```{r}
+#Make a data frame of lon and lat coordinates
+WP<-data.frame(lon = -157.7621, lat = 21.27427) # coordinates for Wailupe
+# Get base layer
+Map1<-get_map(WP)
+# plot it
+ggmap(Map1)
+```
+
+```{r}
+Map1<-get_map(WP,zoom = 17)
+ggmap(Map1)
+```
+
+```{r}
+Map1<-get_map(WP,zoom = 17, maptype = "satellite")
+ggmap(Map1)
+```
+
+```{r}
+Map1<-get_map(WP,zoom = 17, maptype = "watercolor")
+ggmap(Map1)
+```
+
+```{r}
+Map1<-get_map(WP,zoom = 17, maptype = "satellite") 
+ggmap(Map1)+
+  geom_point(data = ChemData,
+             aes(x = Long, y = Lat, color = Salinity),
+             size = 4) +
+  scale_color_viridis_c()
+```
+
+```{r}
+ggmap(Map1)+
+  geom_point(data = ChemData, 
+             aes(x = Long, y = Lat, color = Salinity), 
+             size = 4) + 
+  scale_color_viridis_c()+
+  scalebar( x.min = -157.766, x.max = -157.758,
+           y.min = 21.2715, y.max = 21.2785,
+            dist = 250, dist_unit = "m", model = "WGS84", 
+            transform = TRUE, st.color = "white",
+            box.fill = c("yellow", "white"))
+```
+
+```{r}
+geocode("the white house")
+```
+
+```{r}
+geocode("California State University, Northridge")
+```
+
+```{r}
+search_emoji('smile')
+```
+
+```{r}
+ggplot() + 
+  geom_emoji('smile_cat', 
+             x=1:5, y=1:5, 
+             size=10)
+```
+
