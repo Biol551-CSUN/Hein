@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.path = "../Outputs/")
 ```
 
 # Load Libraries
@@ -28,7 +28,7 @@ meteorites <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience
 
 # Data Analysis
 
-```{r}
+```{r worldwide_meteorites}
 
 # World meteorite imacts
 
@@ -38,13 +38,14 @@ ggplot()+
   geom_polygon(data = world, 
                aes(x = long, 
                    y = lat, 
-                   group = group#,
-                   #fill = region
-                   ),
-               color = "black", fill = "palegreen4")+
-  geom_point(data = meteorites, aes(x = long, y = lat), alpha = 0.25, color = "maroon1") +
-  theme_minimal()+
-  guides(fill = "none")+
+                   group = group),
+               color = "black",
+               fill = "palegreen4")+ # made landmasses pale green
+  geom_point(data = meteorites,
+             aes(x = long,
+                 y = lat),
+             alpha = 0.25,
+             color = "maroon1") + # Maroon spots are meteorite impact sites
   theme(panel.background = element_rect(fill = "lightblue")) +
   coord_map(projection = "mercator",
             xlim = c(-180,180)) # can set limits of longitude (xlim) and latitude (ylim?) to zoom in
