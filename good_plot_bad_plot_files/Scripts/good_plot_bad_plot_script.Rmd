@@ -9,6 +9,45 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, fig.path = "../Outputs/")
 ```
 
+# Assignment Info
+
+Due Date: 2023-03-30
+
+
+Your homework is to create two version of similar plots, using any dataset you choose. You must create the plots using ggplot2, post-processing with Adobe Illustrator or similar is not allowed. **This homework is a contest, and the winner will win a prize to be disclosed.**
+
+Please submit your homework by posting a markdown document containing the plots, the code you used to create them, and your discussion of the plot within the markdown doc to github. Data also needs to be submitted.
+
+The first plot should be as bad as possible. Your reading from Claus Wilke’s and Healy's textbook describe the many ways that a plot can become misleading, difficult to interpret, or or just plain ugly, and you should use all of the tools that you can. Please try to make me, a person who cares a great deal about high-quality data visualization, cry.
+
+You should explain in text all of the ways in which the bad plot is bad. Bullet points are fine, but clearly articulate each principle of data visualization that you have broken.
+
+The second plot should be based on the same or similar data to the first plot, but it should be good. Write briefly about why this is a successful plot.
+
+
+Badplot rules:
+
+All plots must be made in ggplot2, with code visible in the Rmarkdown document.
+The data must be visible.
+The good plot and the bad plot should be based on the same, or similar, data.
+I will post the results on **Twitter**. Please notify me if you would prefer not to have your plots posted publicly. That is fine, but I need to know.
+
+
+Brainstorming for how to make the bad plot bad
+
+- Use eye-searing, over-saturated, clashing colors
+- Use counter-intuitive color or size scaling for quantitative data
+- Make text too small to read
+- Use wrong/unfitting type of plot or graph to display data
+
+
+Possible datasets to use:
+
+- Numbats
+- Bob Ross
+- Sea Stars
+- Meteorites
+
 # Load Libraries
 
 ```{r}
@@ -22,6 +61,14 @@ knitr::opts_chunk$set(echo = TRUE, fig.path = "../Outputs/")
 ```
 
 # Data Analysis
+
+Bad Plot
+
+```{r}
+
+```
+
+Good Plot
 
 ```{r}
 
