@@ -1,0 +1,29 @@
+---
+title: "Good Plot Bad Plot"
+author: "Mac"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.path = "../Outputs/")
+```
+
+# Load Libraries
+
+```{r}
+
+```
+
+# Load Data
+
+```{r}
+
+```
+
+# Data Analysis
+
+```{r}
+
+```
+
