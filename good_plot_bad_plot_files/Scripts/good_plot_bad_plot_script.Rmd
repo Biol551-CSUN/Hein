@@ -32,6 +32,50 @@ The data must be visible.
 The good plot and the bad plot should be based on the same, or similar, data.
 I will post the results on **Twitter**. Please notify me if you would prefer not to have your plots posted publicly. That is fine, but I need to know.
 
+Possible datasets to use:
+
+- Numbats
+- Bob Ross
+- Sea Stars
+- Meteorites
+- Programming Languages
+
+# Load Libraries
+
+```{r}
+library(tidyverse)
+library(here)
+library(maps)
+library(mapdata)
+library(mapproj)
+library(ggmap)
+library(ggsn)
+library(lubridate)
+library(kableExtra)
+library(tidytuesdayR)
+library(ozmaps)
+library(oz)
+```
+
+# Load Data
+
+```{r}
+numbats <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-03-07/numbats.csv')
+
+meteorites <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-06-11/meteorites.csv")
+
+languages <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-03-21/languages.csv')
+
+bob_ross <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-02-21/bob_ross.csv')
+
+popdata<-read_csv(here("Week_07","data","CApopdata.csv"))
+
+stars<-read_csv(here("Week_07","data","stars.csv"))
+```
+
+# Data Analysis
+
+### Bad Plot
 
 Brainstorming for how to make the bad plot bad
 
@@ -39,36 +83,13 @@ Brainstorming for how to make the bad plot bad
 - Use counter-intuitive color or size scaling for quantitative data
 - Make text too small to read
 - Use wrong/unfitting type of plot or graph to display data
-
-
-Possible datasets to use:
-
-- Numbats
-- Bob Ross
-- Sea Stars
-- Meteorites
-
-# Load Libraries
+- Randomize colors for data points on a scatter plot
 
 ```{r}
 
 ```
 
-# Load Data
-
-```{r}
-
-```
-
-# Data Analysis
-
-Bad Plot
-
-```{r}
-
-```
-
-Good Plot
+### Good Plot
 
 ```{r}
 
