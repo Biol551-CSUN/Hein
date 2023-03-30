@@ -32,13 +32,6 @@ The data must be visible.
 The good plot and the bad plot should be based on the same, or similar, data.
 I will post the results on **Twitter**. Please notify me if you would prefer not to have your plots posted publicly. That is fine, but I need to know.
 
-Possible datasets to use:
-
-- Numbats
-- Bob Ross
-- Sea Stars
-- Meteorites
-- Programming Languages
 
 # Load Libraries
 
@@ -53,45 +46,78 @@ library(ggsn)
 library(lubridate)
 library(kableExtra)
 library(tidytuesdayR)
-library(ozmaps)
-library(oz)
+library(patchwork)
+library(ggrepel)
+library(gganimate)
+library(magick)
+library(ggvis)
 ```
 
 # Load Data
 
 ```{r}
-numbats <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-03-07/numbats.csv')
+nuclear_explosions <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-20/nuclear_explosions.csv")
 
-meteorites <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-06-11/meteorites.csv")
-
-languages <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-03-21/languages.csv')
-
-bob_ross <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-02-21/bob_ross.csv')
-
-popdata<-read_csv(here("Week_07","data","CApopdata.csv"))
-
-stars<-read_csv(here("Week_07","data","stars.csv"))
+world <- map_data("world")
 ```
 
 # Data Analysis
 
-### Bad Plot
-
-Brainstorming for how to make the bad plot bad
-
-- Use eye-searing, over-saturated, clashing colors
-- Use counter-intuitive color or size scaling for quantitative data
-- Make text too small to read
-- Use wrong/unfitting type of plot or graph to display data
-- Randomize colors for data points on a scatter plot
-
-```{r}
-
-```
-
 ### Good Plot
 
-```{r}
+Why the good plot is good:
 
+- Uses a color pallet for country of origin that's distinct and colorblind-friendly
+- Uses a readable map projection
+- Uses size of data points to display bomb yield, which is a continuous variable
+- Colors of map and colors of data points are distinct
+
+```{r}
+nukes_over_time_good_plot <- ggplot() +
+  geom_polygon(data = world, aes(x = long, y = lat, group = group), color = "black", fill = "white") +
+  coord_map(projection = "mercator", xlim = c(-180, 180)) +
+  theme(panel.background = element_rect(fill = "grey")) +
+  geom_point(data = nuclear_explosions, aes(x = longitude, y = latitude, color = country, size = yield_upper), alpha = 0.75) +
+  scale_color_manual(values = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")) +
+  transition_states(year, transition_length = 2, state_length = 10) +
+  ease_aes("sine-in-out") +
+  enter_fade() +
+  exit_fade() +
+  ggtitle("Nuclear explosions from 1945 to 1998 (Good Plot)", subtitle = 'Year: {closest_state}') +
+  labs(x = "Longitude", y = "Latitude", size = "Yield (upper estimate)", color = "Country")
+  
 ```
 
+```{r}
+animate(nukes_over_time_good_plot, height = 5, width = 10, units = "in", res = 200, duration = 50)
+anim_save(here("good_plot_bad_plot_files", "Outputs", "nukes_over_time_good_plot.gif"))
+```
+
+
+### Bad Plot
+
+Why the bad plot is bad:
+
+- Uses a confusing, distorted map projection
+- Uses a clashing, eye-searingly over-saturated color palette
+- Uses a counter-intuitive, non-colorblind-friendly color gradient for bomb yields
+- Uses sizes of data points for country of origin, which is a discrete variable
+- Colors of map and colors of data points are not distinct
+- No alpha channel, so data points that are close together can obscure each other
+- Color choice of text makes it illegible
+
+```{r}
+nukes_over_time_bad_plot <- ggplot() +
+  geom_polygon(data = world, aes(x = long, y = lat, group = group), color = "blue", fill = "magenta") +
+  coord_map(projection = "gnomonic", xlim = c(-180, 180)) +
+  theme(panel.background = element_rect(fill = "cyan"), text = element_text(color = "yellow")) +
+  geom_point(data = nuclear_explosions, aes(x = longitude, y = latitude, size = country, color = yield_upper)) +
+  scale_color_gradient(low = "red", high = "green") +
+  transition_states(year, transition_length = 2, state_length = 1) +
+  ggtitle("Nuclear explosions from 1945 to 1998 (Bad Plot)", subtitle = 'Year: {closest_state}')
+```
+
+```{r}
+animate(nukes_over_time_bad_plot, height = 5, width = 10, units = "in", res = 200, duration = 50)
+anim_save(here("good_plot_bad_plot_files", "Outputs", "nukes_over_time_bad_plot.gif"))
+```
