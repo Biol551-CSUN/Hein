@@ -67,10 +67,14 @@ world <- map_data("world")
 
 Why the good plot is good:
 
-- Uses a color pallet for country of origin that's distinct and colorblind-friendly
 - Uses a readable map projection
+- Uses a color palette for country of origin that's distinct and colorblind-friendly
 - Uses size of data points to display bomb yield, which is a continuous variable
 - Colors of map and colors of data points are distinct
+- Uses an Apha channel to allow overlapping data points to be distinguished
+- Transitions between data sets by year happen slowly enough to read the data
+- Uses categorical color values for countries of origin, which is a discrete variable
+- Has clearly readable text
 
 ```{r}
 nukes_over_time_good_plot <- ggplot() +
@@ -105,6 +109,7 @@ Why the bad plot is bad:
 - Colors of map and colors of data points are not distinct
 - No alpha channel, so data points that are close together can obscure each other
 - Color choice of text makes it illegible
+- Transitions between data sets by year happen too fast
 
 ```{r}
 nukes_over_time_bad_plot <- ggplot() +
@@ -118,6 +123,6 @@ nukes_over_time_bad_plot <- ggplot() +
 ```
 
 ```{r}
-animate(nukes_over_time_bad_plot, height = 5, width = 10, units = "in", res = 200, duration = 50)
+animate(nukes_over_time_bad_plot, height = 5, width = 10, units = "in", res = 200, duration = 10)
 anim_save(here("good_plot_bad_plot_files", "Outputs", "nukes_over_time_bad_plot.gif"))
 ```
