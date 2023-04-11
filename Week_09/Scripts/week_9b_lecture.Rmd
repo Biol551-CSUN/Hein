@@ -1,0 +1,37 @@
+---
+title: "Week 9b Lecture"
+author: "Mac"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load Libraries
+
+```{r}
+library(shiny)
+```
+
+# Load Data
+
+```{r}
+
+```
+
+# Data Analysis
+
+## App template
+
+the shortest viable shiny app
+
+```{r}
+ui <- fluidPage('Hello World')
+
+server <- function(input, output){}
+
+shinyApp(ui = ui, server = server)
+```
+
