@@ -1,0 +1,179 @@
+---
+title: "Week 11b Lecture"
+author: "Mac"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load Libraries
+
+```{r}
+library(tidyverse)
+library(here)
+library(gm)
+```
+
+# Load Data
+
+```{r}
+#tuesdata <- tidytuesdayR::tt_load(2021, week = 7)
+#income_mean<-tuesdata$income_mean
+income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
+```
+
+# Data Analysis
+
+Factor:
+
+- a specialized version of a character
+- how we truly store *categorical* data
+- values of factors are called **levels**
+- the default levels are always in alphabetical order
+- make a factor by putting a vector into the function factor()
+
+```{r}
+fruits<-factor(c("Apple", "Grape", "Banana"))
+fruits
+```
+
+If you have a typo in a column of what was supposed to be numbers, R will read everything in as characters. If the rows are characters and you try to convert them to numbers, rows with real characters will be coerced into NAs.
+
+```{r}
+test <- c("A", "1", "2")
+as.numeric(test)
+```
+
+```{r}
+test<-factor(test) # covert to factor
+as.numeric(test)
+```
+
+forcats package:
+
+- Family of functions for categorical data.
+- All the main functions start with fct_
+
+start with the starwars dataset to learn how to use factors
+
+```{r}
+glimpse(starwars)
+```
+
+# starwars
+
+```{r}
+starwars %>% 
+  filter(!is.na(species)) %>% # remove the NAs
+  count(species, sort = TRUE)
+```
+
+```{r}
+star_counts<-starwars %>%
+  filter(!is.na(species)) %>%
+  mutate(species = fct_lump(species, n = 3)) %>%
+  count(species)
+star_counts
+```
+
+```{r}
+star_counts %>%
+  ggplot(aes(x = species, y = n)) +
+  geom_col()
+```
+
+```{r}
+star_counts %>%
+  ggplot(aes(x = fct_reorder(species, n), y = n))+ # reorder the factor of species by n
+  geom_col()
+```
+
+```{r}
+star_counts %>%
+  ggplot(aes(x = fct_reorder(species, n, .desc = TRUE), y = n)) + # reorder the factor of species by n
+  geom_col() +
+  labs(x = "Species")
+```
+
+```{r}
+glimpse(income_mean)
+```
+
+```{r}
+total_income<-income_mean %>%
+  group_by(year, income_quintile) %>%
+  summarise(income_dollars_sum = sum(income_dollars)) %>%
+  mutate(income_quintile = factor(income_quintile)) # make it a factor
+```
+
+```{r}
+total_income %>%
+  ggplot(aes(x = year, y = income_dollars_sum, color = income_quintile)) +
+  geom_line()
+```
+
+```{r}
+total_income%>%
+  ggplot(aes(x = year, y = income_dollars_sum, 
+             color = fct_reorder2(income_quintile,year,income_dollars_sum)))+
+  geom_line()+
+  labs(color = "income quantile")
+```
+
+```{r}
+x1 <- factor(c("Jan", "Mar", "Apr", "Dec"))
+x1
+```
+
+```{r}
+x1 <- factor(c("Jan", "Mar", "Apr", "Dec"), levels = c("Jan", "Mar", "Apr", "Dec"))
+x1
+```
+
+```{r}
+starwars_clean<-starwars %>% 
+  filter(!is.na(species)) %>% # remove the NAs
+  count(species, sort = TRUE) %>%
+  mutate(species = factor(species)) %>% # make species a factor
+  filter(n>3) # only keep species that have more than 3
+starwars_clean
+```
+
+```{r}
+levels(starwars_clean$species)
+```
+
+```{r}
+starwars_clean<-starwars %>% 
+  filter(!is.na(species)) %>% # remove the NAs
+  count(species, sort = TRUE) %>%
+  mutate(species = factor(species)) %>% # make species a factor 
+  filter(n>3)  %>% # only keep species that have more than 3 
+  droplevels() # drop extra levels
+```
+
+```{r}
+levels(starwars_clean$species)
+```
+
+```{r}
+starwars_clean<-starwars %>% 
+  filter(!is.na(species)) %>% # remove the NAs
+  count(species, sort = TRUE) %>%
+  mutate(species = factor(species)) %>% # make species a factor 
+  filter(n>3)  %>% # only keep species that have more than 3 
+  droplevels() %>% # drop extra levels 
+  mutate(species = fct_recode(species, "Humanoid" = "Human"))
+starwars_clean
+```
+
+```{r}
+# m <- Music() +  # initialize a Music object
+#   Meter(4, 4) + # add a 4/4 time signature
+#   Line(list("C5", "D5", "E5", "F5"), list(1, 1, 1, 1)) # add a musical line of four quarter notes
+# show(m, to = c("score", "audio"))
+```
+
